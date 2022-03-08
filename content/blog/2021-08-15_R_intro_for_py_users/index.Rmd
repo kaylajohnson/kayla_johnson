@@ -16,23 +16,21 @@ categories:
 layout: single
 ---
 
-This introduction is a post converted from a small workshop I gave to help my python-using collegues get started with R and the Tidyverse packages. It is meant to be an introduction to the main things you would need to know about R coming from python so that you do not need to read an introduction to programming and R. As a python user, you understand the idea of a package, you just need to know the R equivalent of `import pandas`. I try to cover the basics, the most common data tidying and wrangling tasks, and data visualization in this post.
+This introduction is a post converted from a small workshop I gave to help my python-using colleagues get started with R and the Tidyverse packages. It is meant to be an introduction to the main things you would need to know about R coming from python so that you do not need to read an introduction to programming and R. As a python user, you understand the idea of a package, you just need to know the R equivalent of `import pandas`. I try to cover the basics, the most common data tidying and wrangling tasks, and data visualization in this post.
 
 ## Quick RStudio intro
 There are multiple popular text editors and IDEs amongst python users, but in R, there is really only one wildy popular IDE, which is RStudio. I suggest checking out this RStudio support [page](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-the-RStudio-IDE/) for a pretty comprehensive list of customizations to tweak the default behavior and appearance of RStudio. As of RStudio version 1.4, you can now also write python code in RStudio! Check out [Three Ways to Program in Python With RStudio](https://www.rstudio.com/blog/three-ways-to-program-in-python-with-rstudio/) to learn how to use python alone or R and python together within RStudio. 
 
-One 
-
 ## How R is not python basics
-Installing packages:
+**Installing packages:**
 You will want to use `install.packages("package_name")` to install packages from [CRAN](https://cran.r-project.org/), the Comprehensive R Archive Network. Packages from Bioconductor must be installed from Bioconductor, not CRAN. See this [page](https://www.bioconductor.org/install/) to install Bioconductor. Looking up any package in Bioconductor will also give explicit instructions. Packages can be installed from GitHub if the `devtools` package is installed from CRAN first. Individual developers will generally give those instructions in their documentation.
 
-Loading packages:
-In python, you `import` packages. The R equivalent is `library(package_name)`. Today we are focused on base R and the Tidyverse, so I will only be loading the tidyverse. It is also worth noting that in python, you can `import pandas as pd` and then access pandas functions with `pd.read_csv(args)`. In R, the functions of a package become available to use without a package prefix once you load the package. So, after loading the `readr` package, you can just use `read_csv(args)` because `read_csv` is a function in the readr package. However, you can explicitly tell R which package the function should be pulled from, e.g. `readr::read_csv(args)`. This is helpful if you have loaded two or more packages with different functions that are named the same. When loading a package, R will tell you if there is a name conflict with other loaded packages. These should be rare, but it is worth knowing!
+**Loading packages:**
+In python, you `import` packages. The R equivalent is `library(package_name)`. Today we are focused on base R and the Tidyverse, so I will only be loading `tidyverse`. It is also worth noting that in python, you can `import pandas as pd` and then access pandas functions with `pd.read_csv(args)`. In R, the functions of a package become available to use without a package prefix once you load the package. So, after loading the `readr` package, you can just use `read_csv(args)` because `read_csv` is a function in the `readr` package. However, you can explicitly tell R which package the function should be pulled from, e.g. `readr::read_csv(args)`. This is helpful if you have loaded two or more packages with different functions that are named the same. When loading a package, R will tell you if there is a name conflict with other loaded packages. These should be rare, but it is worth knowing!
 ```{r}
 # if you have not installed it yet: install.packages("tidyverse")
 
-# this line is about as common in R as "import pandas" is in python
+# this line is about as common in R as "import pandas as pd" is in python
 # load the tidyverse
 library(tidyverse)
 ```
@@ -76,34 +74,24 @@ You can also designate the names while creating the list.
 ```{r}
 # if you know the names from the start this is equivalent
 my_list <- list(a = c(1,2,3), b = c(4,5,6), c = c(7,8,9))
+```
 
-### accessing lists ###
-
-## using $ ##
-
+You can access lists with `$` or brackets, but `$` only works on named lists, it will not work with positions e.g. `my_list$1`.
+```{r}
 # this gets the values of the list named "a" in my_list
 my_list$a
-# also note that you can only use $ with named lists, 
-# does not work with positions e.g. my_list$1
+```
 
-## using brackets ##
-
-# gets the whole list object
+When you use brackets to access lists you have the option of using single brackets or double brackets. It might be useful to think of double brackets as being similar to using `.values` in python. Single brackets get the entire object, including the name of the list, while double brackets gets you just the elements of the list. The `$` operator works like the double brackets
+```{r}
+# single brackets gets the whole list object
 my_list["a"]
-# gets the values of the list
+# double brackets gets the values of the list
 my_list[["a"]]
 
 # can also use the position instead of the name
 my_list[1]
 my_list[[1]]
-
-# the difference between single and double brackets might 
-# be easier to remember if you think of double brackets as being
-# similar to .values in python. 
-# Single brackets gets the entire object, 
-# including the name of the list, 
-# while double brackets gets you just the elements of the list. 
-# The $ operator works like the double brackets
 ```
 
 Vector math exists in R without importing packages. 
@@ -112,7 +100,7 @@ c(1,2,3) * c(4,5,6)
 c(1,2,3) * 2
 ```
 
-R dataframes are similar to Pandas dataframes. Since we are working mostly with the tidyverse, I also need to mention tibbles. Tibbles and dataframes are basically the same thing except tibbles have a few slightly nicer features. The features are nice enough that I would say always use a tibble when explicitly creating something, but don't panic about whether something is a dataframe or tibble (although if you need to check, use `class()`). You can also convert a dataframe to a tibble with `as_tibble`. Almost any function that works on a dataframe will work on a tibble. Tidyverse functions output tibbles.
+R dataframes are similar to Pandas dataframes. Since we are working mostly with the tidyverse, I also need to mention tibbles. Tibbles and dataframes are pretty similar in practice, but tibbles have a few nicer features. The features are nice enough that I would say always use a tibble when explicitly creating something, but you don't need to be in constant panic about whether something is a dataframe or tibble (although if you need to check, use `class()`). Tidyverse functions output tibbles. You can also convert a dataframe to a tibble with `as_tibble()`. Almost any function that works on a dataframe will work on a tibble.
 ```{r}
 # creating a tibble
 tbl <- tibble(letter = LETTERS, 
@@ -123,7 +111,7 @@ tbl
 # creating a dataframe would look the same, except you use the data.frame() function instead of tibble()
 ```
 
-Indexing dataframes and tibbles works the same way, but it is slightly different from Pandas dataframes. The concepts of loc and iloc aren't a thing.
+Indexing dataframes and tibbles works the same way, but it is slightly different from Pandas dataframes. The concepts of loc and iloc are not a thing.
 ```{r}
 # choose particular value (in this case, 2nd row, 3rd column)
 tbl[2,3]
@@ -141,14 +129,15 @@ tbl[,"group"]
 
 ```{r}
 # choose all column values with $
-# this only works with column names, not column positions, just like lists
+# this only works with column names, not column positions
 tbl$letter
 ```
 
 ```{r}
 # tidyverse also includes a handy pull function that chooses 
 # the values of a given column, not the whole column itself. 
-# This is especially useful because it can be piped into (see pipes later)
+# This is especially useful because it can be piped into 
+# (we'll see pipes later)
 pull(tbl, 1)
 ```
 
@@ -157,15 +146,14 @@ pull(tbl, 1)
 tbl[2,]
 ```
 
+You can set column names with `colnames()` or change them from what they currently are.
 ```{r}
-# changing colnames is a bit different too
+# changing colnames 
 colnames(tbl) <- c("Letter", "Number", "Group")
 tbl
-# this works whether colnames exist or not, but in this case you can see I changed
-# the colnames from letter, number, group, to Letter, Number, Group
 ```
 
-The most equivalent thing to a numpy array is a matrix. A matrix can only contain one data type and you can set row and/or column names. Selecting works similar to dataframes, but you cannot use the `$` operator. 
+The most equivalent thing to a numpy array is a matrix. These are part of base R, no package necessary. A matrix can only contain one data type and you can set row and/or column names. Selecting works similar to dataframes, but you cannot use the `$` operator. 
 ```{r}
 my_matrix <- matrix(data = c(1:9), nrow = 3, ncol = 3,
                     byrow = FALSE)
@@ -203,7 +191,7 @@ if (num < 10){
 }
 ```
 
-Here I am creating a custom function that converts degrees Fahrenheit to degrees celsius to show how custom functions are written. 
+Here I am creating a custom function that converts degrees Fahrenheit to degrees Celsius to show how custom functions are written. 
 ```{r}
 FtoC <- function(F){
   C <- (F - 32) * (5/9)
@@ -218,12 +206,12 @@ FtoC(50)
 ### Reading/writing (readr)
 
 #### read_delim
-This is the general format for how you read in data:
+This is the general format for how you read in data from a file. This is also a good place to point out that you need to use `T` or `TRUE` and `F` or `FALSE` instead of `True` and `False`. 
 ```{r eval=FALSE}
 # args
 # file = path to file to read in
-# delim = the file delimiter (== sep in pandas)
-# col_names is T/TRUE or F/FALSE for whether the columns have names
+# delim = the file delimiter (== 'sep' in pandas)
+# col_names is T/F for whether the columns have names
 # col_types explicitly gives column types for the file
 # here col_types is saying read the columns in as "double",
 # except the column named "gene", which is a "character" column
@@ -231,17 +219,17 @@ data <- read_delim(file = "some_tsv_file_path", delim = "\t",
                    col_names = F, col_types = cols(.default = "d", gene = "c"))
 ```
 
-The `col_types` argument is not necessary, but can be helpful to include. By default (can be changed with `guess_max`), `read_delim` guesses the column types from the first 1000 rows. Usually this is more than enough but sometimes causes problems for weird variables in huge files, so thought I'd point it out. There is also a `read_tsv` and `read_csv`, which bypass the need for a delim argument. 
+The `col_types` argument is not necessary, but can be helpful to include. By default (can be changed with `guess_max` argument), `read_delim()` guesses the column types from the first 1000 rows. Usually this is more than enough but sometimes causes problems for weird variables in huge files, so thought I'd point it out. There is also a `read_tsv()` and `read_csv()`, which bypass the need for a delim argument. 
 
 #### write_delim
 Write data:
 ```{r eval=FALSE}
  data %>% write_delim("path_to_save_to", delim = "\t", col_names = T)
 ```
-This is the first time we have seen the pipe operator ( %>% ). This is from the `magrittr` package, which is part of the tidyverse (and therefore loaded when you call `library(tidyverse)`). It pipes whatever is to the left of it (in this case `data`, which is a dataframe/tibble) into the function to the right of it as the first argument (in this case, `write_delim`). Tidyverse functions are set up so that data is always the first argument, so pipes can be "stacked" e.g. `data %>% function_one(some_args) %>% function_two(some_args, more_args)`, but this also means sometimes you can use it with non-tidyverse functions, e.g. `c(1,2,3) %>% mean()`.
+This is the first time we have seen the pipe operator ( `%>%` ). This is from the `magrittr` package, which is part of the tidyverse (and therefore loaded when you call `library(tidyverse)`). It pipes whatever is to the left of it (in this case `data`, which is a dataframe/tibble) into the function to the right of it as the first argument (in this case, `write_delim()`). Tidyverse functions are set up so that data is always the first argument, so pipes can be "stacked" e.g. `data %>% function_one(some_args) %>% function_two(some_args, more_args)`, but this also means you can use it with non-tidyverse functions, e.g. `c(1,2,3) %>% mean()`. I am not recommending that use of of the pipe, but it does work.
 
 ### Data transformation (dplyr)
-This section contains the main `dplyr` functions, which help you transform data. The tidyverse package has some nice built-in datasets to help practice and teach functions, so I am going to use one of those datasets, `msleep`. The `msleep` dataset contains the sleep times and weights of a set of mammals, along with their genus, order, and "vore" which tells you their diet type.
+This section contains the main `dplyr` functions, which help you transform data. The tidyverse package has some nice built-in data sets to help practice and teach functions, so I am going to use one of those data sets, `msleep`. The `msleep` data set contains the sleep times and weights of a set of mammals, along with their genus, order, and `vore` which tells you their diet type.
 
 ```{r}
 # look at our msleep dataset
@@ -249,8 +237,9 @@ msleep
 ```
 
 #### Filter - for filtering by row
+Here is how to filter for only the mammals in order Rodentia AND whose conservation status is "domesticated."
 ```{r}
-# find mammals in the dataset that are domesticated rodents (order Rodentia)
+# find mammals in the dataset that are domesticated rodents 
 d_rodents <- filter(msleep, order == "Rodentia", conservation == "domesticated")
 # equivalent
 d_rodents <- msleep %>% filter(order == "Rodentia" & conservation == "domesticated")
@@ -262,45 +251,46 @@ d_rodents <- msleep %>%
 d_rodents
 ```
 
+And here is an example of OR filtering to find mammals that are herbivores or omnivores. The `|` is the or operator.
 ```{r}
 # find mammals that are either herbivores or omnivores
-plant_eaters <- filter(msleep, vore == "herbi" | vore == "omni") # the | is the "or" operator
-# another way to filter for mammals that are either herbivores or omnivores
-plant_eaters <- filter(msleep, vore %in% c("herbi", "omni"))
-# you MUST use the %in% operator if possible 
-# If you used == instead, it would recycle the c("herbi", "omni") vector
-# so that the first row would be kept if vore == "herbi", 
-# second row would be kept if vore == "omni", and so on and so forth. 
-# Using %in% ensures each row is compared to all vector elements (i.e. "herbi" AND "omni")
-# Vector recycling is a normal part of R, see next code chunk for example
+plant_eaters <- filter(msleep, vore == "herbi" | vore == "omni")
 plant_eaters
 ```
 
+Another way to filter for only herbivores/omnivores is to use `%in%`. You cannot use `vore == c("herbi", "omni")`. If you do, R will recycle the c("herbi", "omni") vector so that the first row would be kept if vore == "herbi", second row would be kept if vore == "omni", and so on and so forth. Using `%in%` ensures each row is compared to all vector elements (i.e. "herbi" AND "omni"). Vector recycling is a normal part of R, see next code chunk for example.
+```{r}
+# equivalent to above
+plant_eaters <- filter(msleep, vore %in% c("herbi", "omni"))
+plant_eaters
+```
+
+In this example the output shows that 1 was multiplied by 1, 2 by 2, 3 by 1, and 4 by 2, because the shorter vector (`c(1,2)`) was recycled to properly do multiplication on all elements.
 ```{r}
 # example for vector recycling:
 c(1,2,3,4) * c(1,2)
-
-# can see from the output that 1 was multiplied by 1, 2 by 2, 3 by 1, and 4 by 2, 
-# because the shorter vector (c(1,2)) was recycled to properly do multiplication on all elements
 ```
 
+Knowing `is.na()` and that `!` means "not" is helpful.
 ```{r}
-# knowing is.na() is helpful 
-# also knowing ! is "not" helps, so
-# this gets all data that is not missing conservation status (conservation is not NA)
+# this gets all data that is not missing conservation status
+# (conservation is not NA)
 has_conservation <- msleep %>% filter(!is.na(conservation))
+has_conservation
 ```
 
 
 #### Arrange - for ordering the rows
+Arrange orders the tibble by the columns you choose in the order you put them.
 ```{r}
 # order by sleep_total, then sleep_rem 
 # (can order by as many as you want in the order you put them)
 arrange(msleep, sleep_total, sleep_rem)
 ```
 
+By default `arrange()` orders in ascending order, use `desc()` to get descending order.
 ```{r}
-# by default arrange uses ascending order, here's how to do descending
+# descending order
 arrange(msleep, desc(sleep_total), desc(sleep_rem))
 ```
 
@@ -325,27 +315,27 @@ no_wt <- select(msleep, -brainwt, -bodywt)
 no_wt
 ```
 
-
 ```{r}
 # select specific columns 
 choice_cols <- select(msleep, name, order, conservation)
+choice_cols
 ```
 
 There are a number of helper functions you can use within select():
 
-* starts_with("abc"): matches names that begin with “abc”.
+* `starts_with("abc")`: matches names that begin with “abc”.
 
-* ends_with("xyz"): matches names that end with “xyz”.
+* `ends_with("xyz")`: matches names that end with “xyz”.
 
-* contains("ijk"): matches names that contain “ijk”.
+* `contains("ijk")`: matches names that contain “ijk”.
 
-* matches("(.)\\1"): selects variables that match a regular expression. This one matches any variables that contain repeated characters. You’ll learn more aboutregular expressions in strings.
+* `matches("(.)\\1")`: selects variables that match a regular expression. This one matches any variables that contain repeated characters. 
 
-* num_range("x", 1:3): matches x1, x2 and x3. A more realistic example would maybe look like num_range("wk", 10:13) to select columns called wk10, wk11, wk12, wk13
+* `num_range("x", 1:3)`: matches x1, x2 and x3. A more realistic example would maybe look like num_range("wk", 10:13) to select columns called wk10, wk11, wk12, wk13
 
 * `stringr` is a great package for working with strings
 
-Select can also be used to reaarange columns, since they are placed in the order you choose them in:
+Select can also be used to reaarange columns, since they are placed in the order you choose them in. If you only care about a few columns being first, you can use `everything()` to select everything not already explicitly stated.
 ```{r}
 # for whatever reason you want sleep_total to be first col, sleep_rem to be second col, 
 # and don't care about the order of the rest
@@ -366,47 +356,44 @@ msleep <- rename(msleep, sleep_total = total_sleep)
 ```
 
 #### mutate - for adding new variables
+Mutate just adds each column you create to the end of the tibble. If you only want to keep the cols you are creating in a new variable, use `transmute()`.
 ```{r}
-# mutate just adds each column you create to the end of the dataframe 
-# If you only want to keep the cols you are
-# creating in a new variable, use transmute()
+# make new col percent_rem = rem percent of total sleep
+# make new col brainwt_percent = brain percent of body wt
 mutate(msleep,
-  percent_rem = sleep_rem / sleep_total, # make new col percent_rem = rem percent of total sleep
-  brainwt_percent = brainwt / bodywt) # make new col brainwt_percent 
+  percent_rem = sleep_rem / sleep_total, 
+  brainwt_percent = brainwt / bodywt) 
 ```
 
 #### group_by + summarise - for summarizing data by group
+Summarise can be used on its own, say if you wanted the mean sleep time across all mammals in the data set.
 ```{r}
-# summarise can be used on its own, say if you wanted 
-# the mean sleep time across all mammals in the data set
 summarise(msleep, mean_sleep = mean(sleep_total, na.rm = TRUE))
 ```
 
+Generally though, summarise is more useful in conjunction with `group_by()`. This shouldn't be unfamiliar from using `.groupby` in pandas. You can also group by multiple columns
 ```{r}
-# but generally summarise is much more useful in conjunction with group_by()
-# group_by works like it does in pandas, you can group_by multiple columns
 # get average sleep in each order
 msleep %>% 
 group_by(order) %>% 
 summarise(mean_sleep = mean(sleep_total, na.rm = TRUE))
 ```
 
+Counting is something I seem to do a lot, so here is how `summarise()` can be used for that.
 ```{r}
-# counting is also something I do a lot, so here is summarize for that
 # find how many mammals are in each order
 msleep %>% 
   group_by(order) %>% 
   summarise(total = n())
 ```
 
+You can use summarize to create more than one new variable at once, as long as you're summarizing the same groups of course.
 ```{r}
-# can use summarize to create more than one new variable at once,
-# as long as you're summarizing the same groups of course
-
 # find shortest and longest sleeping mammal from each order
 msleep %>% 
   group_by(order) %>% 
-  summarise(shortest = min(sleep_total, na.rm = T), longest = max(sleep_total, na.rm = T))
+  summarise(shortest = min(sleep_total, na.rm = T), 
+            longest = max(sleep_total, na.rm = T))
 ```
 
 ### Joining dataframes
@@ -414,31 +401,31 @@ Sometimes you need to combine one or more dataframes. In this section, x and y a
 
 Simple combination functions:
 
-* bind_rows(x, y) will stack dfs x and y on top of each other if they have same cols
+* `bind_rows(x, y)` will stack dfs x and y on top of each other if they have same cols
 
-* bind_cols(x, y) will put x and y together if they have same rows 
+* `bind_cols(x, y)` will put x and y together if they have same rows 
 
 Joins need a "by" argument to tell them which columns to join by (to match up the observations to combine the dfs). 
 
 Mutating joins:
 
-* inner_join(x, y, by = c("some_col", "another_col")) (keeps only observations that are present in both x and y)
+* `inner_join(x, y, by = c("some_col", "another_col"))` (keeps only observations that are present in both x and y)
 
-* left_join(x, y, by = "some_col")  (keeps only observations that are present in x)
+* `left_join(x, y, by = "some_col")`  (keeps only observations that are present in x)
 
-* right_join(x, y, by = "some_col") (keeps only observations that are present in y)
+* `right_join(x, y, by = "some_col")` (keeps only observations that are present in y)
 
-* full_join(x, y, by = "some_col")  (keeps only observations that are present in either x or y)
+* `full_join(x, y, by = "some_col")`  (keeps only observations that are present in either x or y)
 
 For visual explanation of joins, see R for Data Science, [here](https://r4ds.had.co.nz/relational-data.html#understanding-joins). These should be somewhat familiar from pandas.
 
 Filtering joins:
 
-* semi_join(x, y) keeps all observations in x that have a match in y.
+* `semi_join(x, y)` keeps all observations in x that have a match in y.
 
-* anti_join(x, y) drops all observations in x that have a match in y.
+* `anti_join(x, y)` drops all observations in x that have a match in y.
 
-To be honest the only join I use regularly is left_join.
+To be honest the only join I use regularly is `left_join()`.
 
 ### Tidy data (tidyr)
 
@@ -586,19 +573,23 @@ msleep <- msleep %>%
 
 ggplot2 builds plots in "layers" which gives you a lot of control. The very first layer is always `ggplot()`, which basically creates a plotting area for you. We can tell ggplot which data we want to use, but it won't do anything with that data without more instruction, as we can see from the blank plotting area created here.
 ```{r}
-ggplot(data = msleep) #create the plot area, give data we'll use
+# create the plot area, give data we'll use
+ggplot(data = msleep)
 ```
 
 We start adding "layers" with `+`. Here I am using `geom_point` to create a scatter plot. Other geom functions create other types of plots, for example `geom_boxplot()` or `geom_bar()`. 
 ```{r}
-ggplot(data = msleep) + #create the plot area, give data we'll use
-  geom_point(mapping = aes(x = sleep_total, y = sleep_rem)) # pick geom to plot sleep_total vs sleep_rem
+#create the plot area, give data we'll use
+ggplot(data = msleep) + 
+  # pick geom to plot sleep_total vs sleep_rem
+  geom_point(mapping = aes(x = sleep_total, y = sleep_rem))
 ```
 
 Adding color with another argument inside of `aes()`
 ```{r}
 ggplot(data = msleep) + 
-  geom_point(mapping = aes(x = sleep_total, y = sleep_rem, color = vore)) #add color to plot by making each data point (mammal) colored by its diet
+  # add color to plot by making each data point (mammal) colored by its diet
+  geom_point(mapping = aes(x = sleep_total, y = sleep_rem, color = vore)) 
 ```
 
 Here I use `scale_color_manual()` to manually set the colors in the plot. It should be noted that if you use a fill argument, say in a boxplot or bar plot, you would need to use `scale_fill_manual()` instead.
@@ -611,7 +602,7 @@ ggplot(data = msleep) +
   scale_color_manual(values = cbPalette) 
 ```
 
-The `aes()` function is a mapping function, so things change with the variable if you want to apply something to the whole plot that isn't dependent on data, like making all points blue, you put the argument outside of aes.
+The `aes()` function is a mapping function, so things change with the variable if you want to apply something to the whole plot that isn't dependent on data, like making all points blue, you put the argument outside of `aes()`.
 ```{r}
 ggplot(data = msleep) + 
   geom_point(mapping = aes(x = sleep_total, y = sleep_rem), color = "blue")
@@ -631,7 +622,7 @@ ggplot(data = msleep) +
   facet_wrap(~vore, nrow = 2) # facet wrap on class by using ~vore, so that each vore gets its own sleep_total vs sleep_rem plot - also pick 2 rows for plot arrangement
 ```
 
-Finally, `theme()` is where you get a lot of customization done. I am not going to get into all the arguments of `theme()` in this post (though I'm tempted), but for quick easy plots, there are a few built-in theme functions that set a specific theme so you don't have to manually specify everything. I don't care for the default gray background in ggplots, so favorite of these built-in theme functions is `theme_minimal()`. Here is a look at our plot using it.
+Finally, `theme()` is where you get a lot of customization done. I am not going to get into all the arguments of `theme()` in this post (though I'm tempted), but for quick easy plots, there are a few built-in theme functions that set a specific theme so you don't have to manually specify everything. I don't care for the default gray background in ggplots, so my favorite of these built-in theme functions is `theme_minimal()`. Here is a look at our plot using it.
 ```{r}
 ggplot(data = msleep) + 
   geom_point(mapping = aes(x = sleep_total, y = sleep_rem, color = vore)) + 
