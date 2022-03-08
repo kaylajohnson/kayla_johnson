@@ -14,7 +14,7 @@ layout: list-sidebar # list, list-sidebar, list-grid
 sidebar: 
   title: A Work in Progress
   description: |
-    I am (slowly) working on converting some of my presentations, workshops, and random R notebooks into blog posts in the hopes that some things in there may be helpful or otherwise interesting to others, or maybe helps my future self.
+    I am (slowly) working on converting some of my presentations, workshops, and random R notebooks into blog posts in the hopes that some things in there may be helpful or otherwise interesting to others, or maybe just helps my future self.
     
   author: "Kayla Johnson"
   text_link_label: Subscribe via RSS
