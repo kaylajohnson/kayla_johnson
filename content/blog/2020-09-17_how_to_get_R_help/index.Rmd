@@ -1,0 +1,189 @@
+---
+title: "How to get R help"
+subtitle: ""
+excerpt: "How to help yourself get help with R"
+date: 2022-01-03
+author: "Kayla Johnson"
+draft: true
+images:
+series:
+tags:
+  - R
+categories:
+  - R
+layout: single
+---
+
+```{r include=FALSE}
+library(knitr)
+```
+
+This post is a reworking of a presentation I gave for R-Ladies East Lansing. I go through my general debugging workflow, then talk about what to do when that fails and you need outside help. 
+
+## Debugging
+
+Eventually you run some code you expect to work and instead get an error. When this happens to me, these are my general steps.
+
+### Reread the code and check for typos
+
+Is there a missing comma? Misspelled argument? As obvious as this should be, I have occasionally Googled an error message only to come back to my code and realize it was a simple typo. Reread first!
+
+### Check that I used the function correctly
+
+If you can pinpoint the function causing the error, it is a good idea to look that function up and check that the expected input, arguments, and output match your expectations. The easiest way to do this is to run `?function_name` in your R console in R Studio. The help page for the function will pop up in the viewer pane. This help page has a lot of important and helpful information, usually including the following sections: *Description* (what the function does), *Usage* (how to use function, with default arguments), *Arguments* (detailed description and type for each argument), *Value* (what the function returns), *References* (relevant material to help understand the function, especially helpful for statistical methods), *See Also* (similar functions, which could be better suited for your issue), and *Examples* (code using demonstrating use of function). 
+
+### Search for the error message
+
+Copy and paste that error message right into the search bar. You will likely see Stack Overflow posts, GitHub issues, or even email chains dedicated to an error message like yours. 
+
+### Google "how to..." and compare similar code to yours
+
+If searching for the error message didn't help, sometimes searching more generally for how to do what you are trying to accomplish will bring you code that does exactly that. Figuring out what exactly to search for is a skill that can be honed, but it is also a bit of an art. Here are a few tips for your Google searches:
+
+- Add "R" to your searches. People do data science in multiple languages, this helps restrict to R.
+- Add the package and/or function you are working with (details!).
+  “How to remove rows based on multiple columns R” → “How to **filter** data frames across multiple columns at once **dplyr**”
+- Try Googling slightly different phrasing (including removing your specific function/package details).
+- At least glance at the most relevant Stack Overflow example that pops up and see if the solution can be applied to your problem (it will not always be immediately obvious).
+
+### Ask a question on public forum
+
+Debugging on your own didn't work out, time to ask others for help! The next section covers where and how you should do this.
+
+## Asking for help
+
+The first part in asking for help is figuring out _where_ to ask for help. If you're asking for help fixing code, the second part is making your problem **easily reproducible** so that someone else can reproduce and help fix your problem. 
+
+### Where to ask questions
+
+There are several places you can ask for R help, but here are the most popular:
+
+- **Stack Overflow**  [tour link](https://stackoverflow.com/tour)
+Best for programming questions (of any language). Click the tour link to learn about how the site works.
+
+- **Stack Exchange** [all sites in stack exchange network](https://stackexchange.com/sites)
+A network of sites (Stack Overflow is one), you find the correct site for your question. All kinds of topics are covered by these sites, but one example of interest to data scientists would be the Cross Validated Stack Exchange, which is “Q&A for people interested in statistics, machine learning, data analysis, data mining, and data visualization.” Click the all sites link above to explore other topic sites.
+
+- **Posit Community (formerly RStudio Community)** [link](https://community.rstudio.com/)
+This site is currently in transition due to the RStudio company changing name to Posit, but the site typically has many categories/tags including RStudio, tidyverse, shiny, R markdown, package development, teaching, etc.
+
+- **rOpenSci** [discuss link](https://discuss.ropensci.org/)
+For questions relating to open science, reproducibility, documenting data, extracting data, package development, etc. Click the link to check it out!
+
+- **Other Field-specific Forums** 
+Forums created for specific fields of study can also be very helpful when you have a niche question. Examples include [R mailing lists](https://www.r-project.org/mail.html) or [Bioconductor support](https://support.bioconductor.org/) for computational biology R packages.
+
+If you have a hard time deciding where your question should be asked, that is ok! Sometimes getting help means posting in the wrong forum and being redirected to the proper place to ask your question. For the most part, the R community is helpful and supportive, so don't take being redirected as bad thing, it is just a way to get you the best chance of help.
+
+### Creating a reproducible example
+
+There are two necessary considerations for creating a reproducible example that will get you help:
+
+(1) Your code must be **easily reproducible** for someone else on their computer. If they cannot reproduce your error, they may not be able to help. If you do not provide an example there is nothing for them to play with to figure out your problem. So, you need to capture everything: include code you tried, any library() calls, and create all necessary objects (such as workable data).
+
+(2) The reproducible example needs to be **complete but minimal**. Strip away everything that is not directly related to your problem. This usually involves creating a much smaller and simpler R object than the one you’re facing in real life.
+
+This does require a bit of work from you, but I promise it is worth the effort. For one thing, you often solve your problem by creating data and trying to recreate your issue. If you do not solve your problem, you've made it easy for someone else to help you from their computer, _highly_ increasing the chances you get the answer you are looking for. 
+
+### Creating data for your reproducible example
+
+When you ask for help on a public forum, no one is going to download an unknown file from your post and load your data to help you solve your problem. Therefore, you have two options. Option 1 is using one of the data sets built-in to R or an R package like the Tidyverse (iris, mtcars, diamonds, etc). Option 2 is to write code to create your own data set so someone else can run that code and work with that data to solve your problem. This is often preferable because it is clear and you don't need to explain where the built-in data sets come from. It gets easier to create data after you have done it a few times and are more familiar with the most helpful functions. Below are some of the most useful with examples of use.
+
+#### sample
+
+The `sample` function chooses a sample of the size you choose with or without replacement, at equal probabilities if you do not specify the `prob` argument or with nonequal probabilities specified for each element in the vector `x`.
+
+```{r}
+# sample the 1-20 vector without replacement 
+# and with equal probability of choosing any given number in the vector
+sample(x = c(1:20), size = 10, replace = FALSE, prob = NULL)
+```
+
+```{r}
+# sample the 1-3 vector with replacement 
+# and with a 0.25 probability of choosing 1 or 2,
+# 0.5 probability for choosing 3
+sample(x = c(1:3), size = 10, replace = TRUE, prob = c(0.25,0.25,0.5))
+```
+
+#### rep
+
+The `rep` function repeats a given vector `x` in full or element-wise depending on which argument you use to specify the number of times.
+
+```{r}
+rep(x = c("a", "b", "c"), times = 3)
+```
+
+```{r}
+rep(x = c("a", "b", "c"), each = 3)
+```
+
+#### rnorm
+
+The `rnorm` function generates a size `n` vector of normally distributed random numbers. You choose the mean and standard deviation of the distribution, or by default they are 0 and 1, respectively.
+
+```{r}
+rnorm(n = 5, mean = 0, sd = 1)
+```
+
+#### runif
+
+The `runif` function generates a size `n` vector of randomly chosen numbers that are uniformly distributed and range between a minimum and maximum of your choosing.
+
+```{r}
+runif(n = 5, min = 50, max = 100)
+```
+
+#### round
+
+The `round` function rounds numbers the nearest integer or to a number of places after the decimal that you specifiy with `digits`. This is helpful to use in conjunction with `rnorm` or `runif` when you want a specific amount of digits after the decimal place.
+
+```{r}
+round(x = c(53.08901, 50.90786, 59.21545, 77.98250, 70.74885))
+```
+
+```{r}
+round(x = c(53.08901, 50.90786, 59.21545, 77.98250, 70.74885), digits = 1)
+```
+
+#### LETTERS and letters
+
+These are not actually functions, they are built-in constants in R, but they extremely useful for quickly creating character vectors. They can also be subset or used with `rep` to create longer vectors.
+
+```{r}
+letters
+```
+
+```{r}
+LETTERS
+```
+
+```{r}
+letters[1:3]
+```
+
+#### dput
+
+The `dput` function takes a data frame or other R object as input and outputs the code to recreate that object. This can be great, but you should use with caution. If your data is large or complex, you should think carefully about what someone else really needs to answer the question you have. If you're asking a question about plotting and only using three columns of your data, you certainly don't need to give someone the other 17 columns you're not using in that plot. If you're asking about summarizing data, it is nice to check the output of just a few groups when trouble shooting, rather than all 94 groups present in your real data. Sometimes subsetting data and using `dput` is your best option, other times you should just create from scratch with some of the above functions. 
+
+```{r}
+# create df to demonstrate use of dput
+df <- tibble(column_one = c("a", "b", "c", "a", "b", "c"),
+             column_two = c(1:6))
+
+# use dput
+dput(df)
+```
+
+This output is likely not the way you usually create data frames, so just to prove it works:
+
+```{r}
+new_df <- dput(df)
+
+new_df
+```
+
+### Checking your reproducible example
+
+It is a good idea to check that your reproducible example is in fact reproducible for someone not working with the objects and packages you have already loaded in your environment. You can do this manually, but the `reprex` package makes this as easy as selecting and copying your code to clipboard (just command/control C) and then running `reprex()`. The rendered code will show up in the viewer pane of RStudio for you to check AND the bit of code you copied to your clipboard is now ready to be pasted as Markdown text suitable for Github issues. For more details on how to use `reprex`, see [this post](https://reprex.tidyverse.org/) on the tidyverse website.
+

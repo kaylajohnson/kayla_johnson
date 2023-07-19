@@ -602,7 +602,7 @@ ggplot(data = msleep) +
   scale_color_manual(values = cbPalette) 
 ```
 
-The `aes()` function is a mapping function, so things change with the variable if you want to apply something to the whole plot that isn't dependent on data, like making all points blue, you put the argument outside of `aes()`.
+The `aes()` function is a mapping function, so things change with the variable. If you want to apply something to the whole plot that isn't dependent on data, like making all points blue, you put the argument outside of `aes()`.
 ```{r}
 ggplot(data = msleep) + 
   geom_point(mapping = aes(x = sleep_total, y = sleep_rem), color = "blue")
