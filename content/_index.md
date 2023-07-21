@@ -1,7 +1,7 @@
 ---
-title: "Kayla Johnson"
+title: "Kayla Johnson, PhD"
 subtitle: "Computational Biologist & Data Scientist"
-description: "I am currently a dual PhD candidate in Biochemistry and Molecular Biology & Computational Mathematics, Science, and Engineering at Michigan State University."
+description: "I create biological insights with machine learning and statistics"
 date: 2019-02-18T12:27:33-06:00
 images:
   - img/kayla-desk.jpg

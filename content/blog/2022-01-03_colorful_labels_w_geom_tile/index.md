@@ -22,7 +22,7 @@ This post is a small celebration of my first first-author paper being published.
 
 This figure is a boxplot of the performance of multiple benchmarked workflows. For each workflow, three method choices are made, which correspond to the three colors/columns in the labels. The blue column represents the "within-sample normalization" method choice where each option (none, CPM, TPM, or RPKM) corresponds to a given shade of blue. The green and orange columns are similar, representing "between-sample normalization" and "network transformation" method choices, respectively. The very top method in the labels therefore corresponds to the workflow in which no within-sample normalization method was chosen ("none" is the lightest shade with nothing written in the box), "CTF" was chosen for between-sample normalization, and "CLR" was chosen for network transformation. The meaning of these categories is not really important to this post, we just need to know that three choices (each a separate category) are made to makeup one workflow, each category has its own color, and each choice within a category has its own shade.
 
-First let's load our packages. I need `tidyverse` for making the plots, `patchwork` for putting the plots together, and I don't _need_ `ggfittext` per say, but it is much easier than manually finding the perfect text size for my labels.
+First let's load our packages. I need `tidyverse` for making the plots, `patchwork` for putting the plots together, and I don't _need_ `ggfittext` per se, but it is much easier than manually finding the perfect text size for my labels.
 
 ```r
 library(tidyverse)
