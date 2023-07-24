@@ -4,7 +4,7 @@ subtitle: ""
 excerpt: "How to help yourself get help with R"
 date: 2022-01-03
 author: "Kayla Johnson"
-draft: true
+draft: false
 images:
 series:
 tags:
