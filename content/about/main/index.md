@@ -10,7 +10,7 @@ intro: |
   <br><br>
   When I'm not working on research I like to read, volunteer, cook, hike, create art, and co-organize [R-Ladies East Lansing events](https://www.meetup.com/rladies-east-lansing/events/).
   <br><br>
- <i class="fas fa-graduation-cap pr2"></i>PhD in BMB & CMSE &#8226; Michigan #State University &#8226; 2022
+ # <i class="fas fa-graduation-cap pr2"></i>PhD in BMB & CMSE &#8226; Michigan #State University &#8226; 2022
 #outro: |
 #  <i class="fas fa-mug-hot pr2"></i>If my blog has helped you, you can [buy me a #coffee](https://ko-fi.com/)!
 ---
